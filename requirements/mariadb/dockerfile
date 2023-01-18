@@ -1,0 +1,11 @@
+FROM debian:buster
+
+RUN apt-get update -y && apt-get upgrade -y
+
+RUN apt-get install mariadb-server mariadb-client -y
+
+ENV MYSQL_ROOT_PASSWORD 1234
+
+RUN service mysql start && sleep 10s && mysqladmin -u root password $MYSQL_ROOT_PASSWORD
+
+CMD ["mysqld"]

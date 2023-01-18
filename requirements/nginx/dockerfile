@@ -1,0 +1,17 @@
+FROM debian:buster
+
+RUN apt-get update -y && apt-get upgrade -y
+
+RUN apt-get install nginx openssl -y 
+
+RUN sed -i 's/ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;/ssl_protocols TLSv1.2;/g' /etc/nginx/nginx.conf
+
+COPY ./conf/nginx.crt /etc/ssl/certs/nginx.crt
+COPY ./conf/nginx.key /etc/ssl/private/nginx.key
+
+COPY ./conf/default /etc/nginx/sites-available/
+
+RUN mkdir /var/www/html/mr
+COPY web /var/www/html/mr
+
+ENTRYPOINT nginx -g 'daemon off;'
