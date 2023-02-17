@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+    mariadb:
+        build: ~/Desktop/inceptionV/srcs/requirements/mariadb 
+        image: mariadb
+        container_name : mariadb
+        restart: unless-stopped
+        # ports:
+            # - "3306:3306"
+        env_file:
+            - .env
+        networks:
+            - wordpress
+        volumes:
+            - 'db:/var/lib/mysql'
+    nginx:
+        build: ~/Desktop/inceptionV/srcs/requirements/nginx
+        depends_on:
+            - wordpress
+        image: nginx
+        container_name : nginx
+        restart: unless-stopped
+        ports:
+            - "443:443"
+        networks:
+            - wordpress
+        volumes:
+            - 'wordpress:/var/www/'
+    wordpress:
+        build: ~/Desktop/inceptionV/srcs/requirements/wordpress
+        image: wordpress
+        depends_on:
+            - mariadb
+        container_name : wordpress
+        restart: unless-stopped
+        # ports:
+            # - "9000:9000"
+        env_file:
+            - .env
+        networks:
+            - wordpress
+        volumes:
+            - 'wordpress:/var/www/'
+networks:
+  wordpress:
+    driver: bridge
+volumes:
+    wordpress:
+        # driver: "local"
+        # driver_opts:
+            # o: bind
+            # type: ext4
+            # device: /home/oel-berh/data/wp
+    db:
+        # driver: "local"
+        # driver_opts:
+            # o: bind
+            # type: ext4
+            # device: /home/oel-berh/data/db

@@ -1,0 +1,14 @@
+FROM debian:buster
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install wget php-fpm php-mysql -y
+WORKDIR /var/www/html
+RUN wget https://wordpress.org/latest.tar.gz
+RUN tar xvf latest.tar.gz
+RUN rm latest.tar.gz
+RUN sed -i 's|listen = /run/php/php7.3-fpm.sock|listen = 0.0.0.0:9000|g' /etc/php/7.3/fpm/pool.d/www.conf
+RUN chown -R www-data:www-data /var/www/html/wordpress/
+RUN mkdir /run/php/
+# RUN ["php-fpm7.3", "-F", "-R"]
+COPY /wp-config.php  /var/www/html/wordpress/
+COPY /wordpress.sh /
+CMD [ "sh", "/wordpress.sh"]
