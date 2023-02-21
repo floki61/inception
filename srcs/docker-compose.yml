@@ -42,6 +42,33 @@ services:
             - wordpress
         volumes:
             - 'wordpress:/var/www/'
+    redis:
+        build: ~/Desktop/inceptionV/srcs/requirements/redis-cach
+        image: redis
+        depends_on:
+            - wordpress
+        container_name: redis
+        restart: unless-stopped
+        env_file:
+            - .env
+        networks:
+            - wordpress
+        volumes:
+            - 'redis:/var/lib/redis'
+    ftp:
+        build: ~/Desktop/inceptionV/srcs/requirements/ftp
+        image: ftp
+        container_name : ftp
+        restart: unless-stopped
+        ports:
+            - "21:21"
+        env_file:
+            - .env
+        networks:
+            - wordpress
+        volumes:
+            - 'wordpress:/var/www/'
+
 networks:
   wordpress:
     driver: bridge
@@ -58,3 +85,4 @@ volumes:
             # o: bind
             # type: ext4
             # device: /home/oel-berh/data/db
+    redis:

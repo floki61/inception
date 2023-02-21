@@ -48,6 +48,12 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
+
+define('WP_REDIS_HOST', 'redis');
+define('WP_REDIS_PORT', '6379');
+define('WP_CACHE_KEY_SALT', 'example_');
+
+
 define( 'AUTH_KEY',         'put your unique phrase here' );
 define( 'SECURE_AUTH_KEY',  'put your unique phrase here' );
 define( 'LOGGED_IN_KEY',    'put your unique phrase here' );
