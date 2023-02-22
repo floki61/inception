@@ -55,6 +55,20 @@ services:
             - wordpress
         volumes:
             - 'redis:/var/lib/redis'
+    adminer:
+        build: ~/Desktop/inceptionV/srcs/requirements/adminer
+        image: adminer
+        depends_on:
+            - wordpress
+            # - nginx
+        container_name: adminer
+        restart: unless-stopped
+        networks:
+            - wordpress
+        environment:
+            AMDINER_DEFAULT_SERVER: mariadb
+        volumes:
+            - 'wordpress:/var/www/'
     ftp:
         build: ~/Desktop/inceptionV/srcs/requirements/ftp
         image: ftp
