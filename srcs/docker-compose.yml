@@ -14,6 +14,7 @@ services:
             - wordpress
         volumes:
             - 'db:/var/lib/mysql'
+        init: true
     nginx:
         build: ~/Desktop/inceptionV/srcs/requirements/nginx
         depends_on:
@@ -27,6 +28,7 @@ services:
             - wordpress
         volumes:
             - 'wordpress:/var/www/'
+        init: true
     wordpress:
         build: ~/Desktop/inceptionV/srcs/requirements/wordpress
         image: wordpress
@@ -42,6 +44,7 @@ services:
             - wordpress
         volumes:
             - 'wordpress:/var/www/'
+        init: true
     redis:
         build: ~/Desktop/inceptionV/srcs/requirements/redis-cach
         image: redis
@@ -55,6 +58,7 @@ services:
             - wordpress
         volumes:
             - 'redis:/var/lib/redis'
+        init: true
     adminer:
         build: ~/Desktop/inceptionV/srcs/requirements/adminer
         image: adminer
@@ -69,6 +73,7 @@ services:
             AMDINER_DEFAULT_SERVER: mariadb
         volumes:
             - 'wordpress:/var/www/'
+        init: true
     ftp:
         build: ~/Desktop/inceptionV/srcs/requirements/ftp
         image: ftp
@@ -76,12 +81,25 @@ services:
         restart: unless-stopped
         ports:
             - "21:21"
+            - "21000-21010:21000-21010"
         env_file:
             - .env
         networks:
             - wordpress
         volumes:
-            - 'wordpress:/var/www/'
+            - 'wordpress:/home/oel-berh/wordpress'
+        init: true
+    portainer:
+        build: ~/Desktop/inceptionV/srcs/requirements/portainer
+        image: portainer
+        container_name : portainer
+        restart: unless-stopped
+        networks:
+            - wordpress
+        volumes:
+            - '/var/run/docker.sock:/var/run/docker.sock'
+            - 'data:/data/'
+        init: true
 
 networks:
   wordpress:
@@ -100,3 +118,4 @@ volumes:
             # type: ext4
             # device: /home/oel-berh/data/db
     redis:
+    data:

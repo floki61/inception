@@ -1,14 +1,14 @@
 SRC = ~/Desktop/inceptionV/srcs/docker-compose.yml
 
 re:${SRC}
-	docker-compose -f ${SRC} up --build
+	@docker-compose -f ${SRC} up --build
 build:${SRC}
-	docker-compose -f ${SRC} build
+	@docker-compose -f ${SRC} build
 up: ${SRC} 
-	docker-compose -f ${SRC} up
+	@docker-compose -f ${SRC} up
 down: ${SRC}
-	docker-compose -f ${SRC} down
+	@docker-compose -f ${SRC} down
 v: ${SRC}
-	docker-compose -f ${SRC} down -v
+	@docker-compose -f ${SRC} down -v
 start: ${SRC}
-	docker-compose -f ${SRC} start
+	@docker-compose -f ${SRC} start
