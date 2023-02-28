@@ -1,0 +1,6 @@
+FROM debian:buster
+RUN mkdir -p /var/www/
+WORKDIR /var/www/
+RUN chown -R www-data:www-data /var/www/
+COPY ./web /var/www/web
+# RUN mkdir /var/www/html/web

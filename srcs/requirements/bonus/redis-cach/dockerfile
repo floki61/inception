@@ -1,0 +1,11 @@
+FROM debian:buster
+RUN apt-get update && apt-get install -y redis-server
+CMD ["redis-server", "--protected-mode", "no"]
+
+# your WordPress site should be using Redis as a caching mechanism.
+# Redis will store cache data in memory, which should make your site faster and more responsive.
+
+# It's worth noting that Redis is not a database,
+# so it can't be used to store data in the same way that a MySQL or MariaDB database can.
+# However, you can use Redis to cache frequently-accessed data, 
+# which can help to speed up your site and reduce the load on your database.

@@ -1,0 +1,8 @@
+FROM debian:buster
+RUN apt-get update && apt-get install -y vsftpd
+COPY ./tools/vsftpd.conf /etc/vsftpd.conf
+COPY ./tools/ftp.sh .
+EXPOSE 21
+CMD [ "sh", "ftp.sh"]
+
+

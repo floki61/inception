@@ -1,9 +1,0 @@
-FROM debian:buster
-RUN apt-get update -y && apt-get install -y wget php php-mysql adminer
-COPY adminer.sh /
-RUN chmod +x /adminer.sh
-WORKDIR /var/www/html/wordpress/
-# ENTRYPOINT tail -f
-ENTRYPOINT ["sh", "/adminer.sh"]
-# CMD php -S 0.0.0.0:8888
-

@@ -1,17 +1,14 @@
 FROM debian:buster
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install mariadb-server mariadb-client -y
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get install -y mariadb-server 
 RUN sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN sed -i 's/#port/port/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 EXPOSE 3306
-COPY h .
-# COPY db.sql .
+COPY ./tools/mariadb.sh .
 ARG MYSQL_USER="mysqluser"
 ARG MYSQL_DATABASE="bob"
 ARG MYSQL_PASSWORD="mysqlpassword"
 ARG MYSQL_ROOT_PASSWORD="rootpassword"
-
-RUN chmod +x h
-RUN ./h
-# ENTRYPOINT ["sh", "h.sh"]
+RUN chmod +x mariadb.sh
+RUN ./mariadb.sh
 ENTRYPOINT ["mysqld"]

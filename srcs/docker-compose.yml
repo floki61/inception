@@ -28,6 +28,7 @@ services:
             - wordpress
         volumes:
             - 'wordpress:/var/www/'
+            - 'port:/var/www/web'
         init: true
     wordpress:
         build: ~/Desktop/inceptionV/srcs/requirements/wordpress
@@ -46,7 +47,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     redis:
-        build: ~/Desktop/inceptionV/srcs/requirements/redis-cach
+        build: ~/Desktop/inceptionV/srcs/requirements/bonus/redis-cach
         image: redis
         depends_on:
             - wordpress
@@ -60,7 +61,7 @@ services:
             - 'redis:/var/lib/redis'
         init: true
     adminer:
-        build: ~/Desktop/inceptionV/srcs/requirements/adminer
+        build: ~/Desktop/inceptionV/srcs/requirements/bonus/adminer
         image: adminer
         depends_on:
             - wordpress
@@ -75,7 +76,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     ftp:
-        build: ~/Desktop/inceptionV/srcs/requirements/ftp
+        build: ~/Desktop/inceptionV/srcs/requirements/bonus/ftp
         image: ftp
         container_name : ftp
         restart: unless-stopped
@@ -90,7 +91,7 @@ services:
             - 'wordpress:/home/oel-berh/wordpress'
         init: true
     portainer:
-        build: ~/Desktop/inceptionV/srcs/requirements/portainer
+        build: ~/Desktop/inceptionV/srcs/requirements/bonus/portainer
         image: portainer
         container_name : portainer
         restart: unless-stopped
@@ -100,7 +101,16 @@ services:
             - '/var/run/docker.sock:/var/run/docker.sock'
             - 'data:/data/'
         init: true
-
+    port:
+        build: ~/Desktop/inceptionV/srcs/requirements/bonus/port
+        image: port
+        container_name : port
+        ports:
+            - "5000:5000"
+        networks:
+            - wordpress
+        volumes:
+            - 'port:/var/www/web'
 networks:
   wordpress:
     driver: bridge
@@ -119,3 +129,4 @@ volumes:
             # device: /home/oel-berh/data/db
     redis:
     data:
+    port:
