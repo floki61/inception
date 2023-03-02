@@ -2,7 +2,7 @@ version: '3'
 
 services:
     mariadb:
-        build: ~/Desktop/inceptionV/srcs/requirements/mariadb 
+        build: /Users/omar/Documents/inception/srcs/requirements/mariadb 
         image: mariadb
         container_name : mariadb
         restart: unless-stopped
@@ -16,7 +16,7 @@ services:
             - 'db:/var/lib/mysql'
         init: true
     nginx:
-        build: ~/Desktop/inceptionV/srcs/requirements/nginx
+        build: /Users/omar/Documents/inception/srcs/requirements/nginx
         depends_on:
             - wordpress
         image: nginx
@@ -31,7 +31,7 @@ services:
             - 'port:/var/www/web'
         init: true
     wordpress:
-        build: ~/Desktop/inceptionV/srcs/requirements/wordpress
+        build: /Users/omar/Documents/inception/srcs/requirements/wordpress
         image: wordpress
         depends_on:
             - mariadb
@@ -47,7 +47,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     redis:
-        build: ~/Desktop/inceptionV/srcs/requirements/bonus/redis-cach
+        build: /Users/omar/Documents/inception/srcs/requirements/bonus/redis-cach
         image: redis
         depends_on:
             - wordpress
@@ -61,7 +61,7 @@ services:
             - 'redis:/var/lib/redis'
         init: true
     adminer:
-        build: ~/Desktop/inceptionV/srcs/requirements/bonus/adminer
+        build: /Users/omar/Documents/inception/srcs/requirements/bonus/adminer
         image: adminer
         depends_on:
             - wordpress
@@ -76,7 +76,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     ftp:
-        build: ~/Desktop/inceptionV/srcs/requirements/bonus/ftp
+        build: /Users/omar/Documents/inception/srcs/requirements/bonus/ftp
         image: ftp
         container_name : ftp
         restart: unless-stopped
@@ -91,7 +91,7 @@ services:
             - 'wordpress:/home/oel-berh/wordpress'
         init: true
     portainer:
-        build: ~/Desktop/inceptionV/srcs/requirements/bonus/portainer
+        build: /Users/omar/Documents/inception/srcs/requirements/bonus/portainer
         image: portainer
         container_name : portainer
         restart: unless-stopped
@@ -102,11 +102,9 @@ services:
             - 'data:/data/'
         init: true
     port:
-        build: ~/Desktop/inceptionV/srcs/requirements/bonus/port
+        build: /Users/omar/Documents/inception/srcs/requirements/bonus/port
         image: port
         container_name : port
-        ports:
-            - "5000:5000"
         networks:
             - wordpress
         volumes:

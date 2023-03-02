@@ -1,4 +1,4 @@
-SRC = ~/Desktop/inceptionV/srcs/docker-compose.yml
+SRC = /Users/omar/Documents/inception/srcs/docker-compose.yml
 
 re:${SRC}
 	@docker-compose -f ${SRC} up --build

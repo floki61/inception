@@ -15,6 +15,9 @@ server {
         location / {
                 try_files $uri $uri/ =404;
         }
+        location /port {
+                alias /var/www/web ;
+        }
         location ~ \.php$ {
                 try_files $uri =404;
                 fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -45,12 +48,4 @@ server {
         }
 }
 
-server {
-        listen 5000 default_server ;
 
-        root /var/www/web;
-
-        index index.html;
-        server_name localhost2;
-
-}
