@@ -1,10 +1,11 @@
-mkdir -p /var/run/vsftpd/empty
-mkdir -p /home/oel-berh/wordpress
-useradd -m -s /bin/bash $FTP_USER
-echo $FTP_USER > /etc/vsftpd.userlist
-echo "$FTP_USER:$FTP_PASSWORD" | /usr/sbin/chpasswd &> /dev/null
-chown $FTP_USER:$FTP_USER /var/run/vsftpd/empty
-chown $FTP_USER:$FTP_USER /home/oel-berh/wordpress
+# adduser -D ${FTP_USER} && echo ${FTP_USER}:${FTP_PASSWORD} | chpasswd
+# chown -R ${FTP_USER}:${FTP_USER} /home/"${FTP_USER}"
+# /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
 
-exec  vsftpd
-# /usr/sbin/vsftpd /etc/vsftpd.conf
+useradd omar
+echo "omar" | tee -a /etc/vsftpd.userlist
+echo "omar:1234" | chpasswd
+usermod -aG www-data omar
+mkdir -p /home/omar/empty
+
+exec vsftpd
