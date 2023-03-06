@@ -2,7 +2,7 @@ version: '3'
 
 services:
     mariadb:
-        build: /Users/omar/Documents/inception/srcs/requirements/mariadb 
+        build: ./requirements/mariadb 
         image: mariadb
         container_name : mariadb
         restart: unless-stopped
@@ -14,7 +14,7 @@ services:
             - 'db:/var/lib/mysql'
         init: true
     nginx:
-        build: /Users/omar/Documents/inception/srcs/requirements/nginx
+        build: ./requirements/nginx
         depends_on:
             - wordpress
         image: nginx
@@ -29,7 +29,7 @@ services:
             - 'port:/var/www/web'
         init: true
     wordpress:
-        build: /Users/omar/Documents/inception/srcs/requirements/wordpress
+        build: ./requirements/wordpress
         image: wordpress
         depends_on:
             - mariadb
@@ -43,7 +43,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     redis:
-        build: /Users/omar/Documents/inception/srcs/requirements/bonus/redis-cach
+        build: ./requirements/bonus/redis-cach
         image: redis
         depends_on:
             - wordpress
@@ -57,7 +57,7 @@ services:
             - 'redis:/var/lib/redis'
         init: true
     adminer:
-        build: /Users/omar/Documents/inception/srcs/requirements/bonus/adminer
+        build: ./requirements/bonus/adminer
         image: adminer
         depends_on:
             - wordpress
@@ -71,7 +71,7 @@ services:
             - 'wordpress:/var/www/'
         init: true
     ftp:
-        build: /Users/omar/Documents/inception/srcs/requirements/bonus/ftp
+        build: ./requirements/bonus/ftp
         image: ftp
         container_name : ftp
         restart: unless-stopped
@@ -86,7 +86,7 @@ services:
             - 'wordpress:/home/oel-berh/wordpress'
         init: true
     portainer:
-        build: /Users/omar/Documents/inception/srcs/requirements/bonus/portainer
+        build: ./requirements/bonus/portainer
         image: portainer
         container_name : portainer
         restart: unless-stopped
@@ -97,7 +97,7 @@ services:
             - 'data:/data/'
         init: true
     port:
-        build: /Users/omar/Documents/inception/srcs/requirements/bonus/port
+        build: ./requirements/bonus/port
         image: port
         container_name : port
         networks:
@@ -109,17 +109,20 @@ networks:
     driver: bridge
 volumes:
     wordpress:
-        # driver: "local"
-        # driver_opts:
-            # o: bind
-            # type: ext4
-            # device: /home/oel-berh/data/wp
+        driver: "local"
+        driver_opts:
+            o: bind
+            type: ext4
+            device: /home/oel-berh/data/wp
     db:
-        # driver: "local"
-        # driver_opts:
-            # o: bind
-            # type: ext4
-            # device: /home/oel-berh/data/db
+        driver: "local"
+        driver_opts:
+            o: bind
+            type: ext4
+            device: /home/oel-berh/data/db
     redis:
     data:
     port:
+
+#mariadb : rootpassword
+#wordpress creat newuser
